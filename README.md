@@ -3,7 +3,7 @@
   <h1 align="center">custom_envs</h1>
 
   <p align="center">
-    <h3 align="center">Just a repo in which to save some useful and fancy custom envs</h3>
+    <h3 align="center">Just a repo in which to save some useful and fancy Linux funcions and environment customisation</h3>
     <br />
     <strong>- Felipe M. Almeida</strong>
     <br />
