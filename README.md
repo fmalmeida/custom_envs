@@ -13,15 +13,6 @@
 ## Customizing prompt
 
 ```bash
-# Setting number of columns (horizontal size) and color variables
-COLUMNS=400
-DARKGRAY='\e[1;30m'
-LIGHTRED='\e[1;31m'
-GREEN='\e[1;32m'
-YELLOW='\e[1;33m'
-LIGHTBLUE='\e[1;34m'
-NC='\e[m'
-
 # Customizing PROMPT
 SIMPLEPROMPT='\w> '
 FANCYPROMP='\[\e[1;31;40m\]┏━┅◉ \[\e[4;34m\]\w\[\e[0;40m\] ┅┅◈ \d ⌚ \A \[\e[1;38m\]┅┅◈ \u@\H (\!)\[\e[0m\]\n\[\e[1;31m\]┗━►\[\e[0m\] '
