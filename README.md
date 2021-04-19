@@ -25,7 +25,7 @@ NC='\e[m'
 # Customizing PROMPT
 SIMPLEPROMPT='\w> '
 FANCYPROMP='\[\e[1;31;40m\]┏━┅◉ \[\e[4;34m\]\w\[\e[0;40m\] ┅┅◈ \d ⌚ \A \[\e[1;38m\]┅┅◈ \u@\H (\!)\[\e[0m\]\n\[\e[1;31m\]┗━►\[\e[0m\] '
-PS1='\[\e[1;31;40m\]┏━┅◉ \[\e[4;34m\]\w\[\e[0;40m\] ┅┅◈ \d ⌚ \A \[\e[1;38m\]┅┅◈ \u@\H (\!)\[\e[0m\]\n\[\e[1;31m\]┗━►\[\e[0m\] '
+PS1="$FANCYPROMP"
 
 #this will change the title to your full current working directory
 PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/}\007"'
