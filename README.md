@@ -25,6 +25,18 @@ PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/}\007"'
 
 ## Useful functions
 
+### Query/check the latest release tag of a Git repo.
+
+This function enables that you easily check which is the latest release tag available in a github repository. Usage: `get_latest_release {username/repository}`.
+
+```bash
+get_latest_release() {
+  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
+    grep '"tag_name":' |                                            # Get tag line
+    sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
+}
+```
+
 ### Force release update in Github.
 
 This function enables that you easily update a published Github release to "watch" or to use/save files from the latest commit. Usage: `force_git_release_update_to_commit {relase tag}`.
