@@ -75,3 +75,29 @@ onelink() {
 ```bash
 checkdisk() { ps aux | grep fsck; }
 ```
+
+### SSH config
+
+How to config a ssh config, with jumps? So you can connect to servers, using another as "entrance" without using passwords? Super handy to use with VS Code.
+
+```bash
+Host main
+	HostName 192.168.33.10      # can be the ip (192.168.33.10) or the address (example.com) or machine name (machine)
+	User user                   # the user name to login
+	Port 3457                   # port for connection
+	IdentityFile ~/.ssh/id_rsa  # path to the public key created with ssh-keygen
+
+# to access this one we must be in "main"
+Host secondary
+	HostName second
+  User user
+  Port 22
+	IdentityFile ~/.ssh/id_rsa_second    # this key must be from your local machine to the second server, not from the "main" to the "second"
+	ProxyJump main                       # this is the key -- it tells ssh to access this machine using the "main" as entrance
+	ServerAliveInterval 240              # configuration of time for server to survive
+	ServerAliveCountMax 2                # max number of alive servers
+```
+
+* Keys must be created with `ssh-keygen`
+  + Can be manually placed inside ~/.ssh/authorized_keys inside the "server" machine
+  + Or can be added to the "server" machine with `ssh-copy-id`
