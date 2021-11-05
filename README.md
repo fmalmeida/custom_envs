@@ -117,3 +117,27 @@ Convert a bam to PAF using paftools.js from minimap2
 ```bash
 samtools view -h <input.bam> | paftools.js sam2paf -
 ```
+
+### paf to bed (with sequences)
+
+Create a BED file with 4 columns (chr, start, end, seq) that will be useful for replacing DNA strings in fasta using the function for that in my [python scripts](https://github.com/fmalmeida/pythonScripts). It depends on bedtools and [seqkit](https://bioinf.shenwei.me/seqkit/)
+
+It creates using the coordinates from the reference sequence in the PAF file.
+
+```bash
+paf2bedseq() {
+  # order: PAF FASTA
+
+  # create bed
+  cut -f 6,8,9 $1 > paf2bedseq.bed
+
+  # get fasta
+  bedtools getfasta -fi $2 -fo paf2bedseq.fasta -bed paf2bedseq.bed
+
+  # create final file
+  seqkit fx2tab paf2bedseq.fasta | sed -e 's/:/\t/g' -e 's/-/\t/g' -e 's/ /\t/g'
+
+  # clean env
+  rm paf2bedseq.bed paf2bedseq.fasta
+}
+```

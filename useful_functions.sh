@@ -29,3 +29,20 @@ onelink() {
 
 # Check disk usage/mounted
 checkdisk() { ps aux | grep fsck; }
+
+# function to convert PAF to bed with sequences
+paf2bedseq() {
+  # order: PAF FASTA
+
+  # create bed
+  cut -f 6,8,9 $1 > paf2bedseq.bed
+
+  # get fasta
+  bedtools getfasta -fi $2 -fo paf2bedseq.fasta -bed paf2bedseq.bed
+
+  # create final file
+  seqkit fx2tab paf2bedseq.fasta | sed -e 's/:/\t/g' -e 's/-/\t/g' -e 's/ /\t/g'
+
+  # clean env
+  rm paf2bedseq.bed paf2bedseq.fasta
+}
