@@ -101,3 +101,11 @@ Host secondary
 * Keys must be created with `ssh-keygen`
   + Can be manually placed inside ~/.ssh/authorized_keys inside the "server" machine
   + Or can be added to the "server" machine with `ssh-copy-id`
+
+### sam 2 bam pipe
+
+Just to save a manner on how to pipe a sam and return a sorted bam. Useful to create aliases.
+
+```bash
+samtools view -Shu - | samtools sort -
+```
