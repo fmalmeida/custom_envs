@@ -126,10 +126,16 @@ It creates using the coordinates from the reference sequence in the PAF file.
 
 ```bash
 paf2bedseq() {
-  # order: PAF FASTA
+  # order: PAF FASTA SELECTION (REF / QUERY)
 
   # create bed
-  cut -f 6,8,9 $1 > paf2bedseq.bed
+  if [[ $3 == "REF" ]]
+  then
+    COLS="6,8,9"
+  else
+    COLS="1,3,4"
+  fi
+  cut -f "${COLS}" $1 > paf2bedseq.bed
 
   # get fasta
   bedtools getfasta -fi $2 -fo paf2bedseq.fasta -bed paf2bedseq.bed
