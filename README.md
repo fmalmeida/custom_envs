@@ -109,3 +109,11 @@ Just to save a manner on how to pipe a sam and return a sorted bam. Useful to cr
 ```bash
 samtools view -Shu - | samtools sort -
 ```
+
+### bam 2 paf
+
+Convert a bam to PAF using paftools.js from minimap2
+
+```bash
+samtools view -h <input.bam> | paftools.js sam2paf -
+```
