@@ -127,23 +127,43 @@ It creates using the coordinates from the reference sequence in the PAF file.
 ```bash
 paf2bedseq() {
   # order: PAF FASTA SELECTION (REF / QUERY)
+  # for instance, if selects REF
+  # it will display the coordinates of the REF
+  # and its relative sequences in QUERY
 
   # create bed
   if [[ $3 == "REF" ]]
   then
-    COLS="6,8,9"
+    SELECTED_COLS="6,8,9"
+    SEQUENCE_COLS="1,3,4"
   else
-    COLS="1,3,4"
+    SELECTED_COLS="1,3,4"
+    SEQUENCE_COLS="6,8,9"
   fi
-  cut -f "${COLS}" $1 > paf2bedseq.bed
 
-  # get fasta
-  bedtools getfasta -fi $2 -fo paf2bedseq.fasta -bed paf2bedseq.bed
+  # read paf file
+  while read line; do
 
-  # create final file
-  seqkit fx2tab paf2bedseq.fasta | sed -e 's/:/\t/g' -e 's/-/\t/g' -e 's/ /\t/g'
+    # coords the user desires to have a sequence
+    echo $line | cut -f "${SEQUENCE_COLS}" > SEQUENCE.bed
 
-  # clean env
-  rm paf2bedseq.bed paf2bedseq.fasta
+    # coords to replace because it must has the coordinates of one FASTA
+    # with the relative sequence from the other "FASTA"
+    SELECTED_COORDS=$(echo $line | cut -f "${SELECTED_COLS}")
+
+    # get fasta from that selected col
+    bedtools getfasta -fi $2 -fo SEQUENCE.fasta -bed SEQUENCE.bed
+
+    # create tabular file with sequence only the sequence file
+    DESIRED_SEQUENCE=$(seqkit fx2tab SEQUENCE.fasta | cut -f 4)
+
+    # clean env
+    rm SEQUENCE.bed SEQUENCE.fasta
+
+    # echo
+    echo -e "$SELECTED_COORDS\t$DESIRED_SEQUENCE"
+
+  done < $1
+
 }
 ```
