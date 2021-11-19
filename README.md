@@ -90,8 +90,8 @@ Host main
 # to access this one we must be in "main"
 Host secondary
 	HostName second
-  User user
-  Port 22
+        User user
+        Port 22
 	IdentityFile ~/.ssh/id_rsa_second    # this key must be from your local machine to the second server, not from the "main" to the "second"
 	ProxyJump main                       # this is the key -- it tells ssh to access this machine using the "main" as entrance
 	ServerAliveInterval 240              # configuration of time for server to survive
@@ -107,7 +107,7 @@ Host secondary
 Just to save a manner on how to pipe a sam and return a sorted bam. Useful to create aliases.
 
 ```bash
-samtools view -Shu - | samtools sort -
+samtools view -Shu - | samtools sort - -
 ```
 
 ### bam 2 paf
